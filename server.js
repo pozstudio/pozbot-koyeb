@@ -58,8 +58,7 @@ app.post('/connect', (req, res) => {
   const { ip, port, version } = req.body;
   const botID = Math.floor(Math.random() * 5000) + 1;
   req.session.botID = botID;
-  const botName = `PozBot_${botID}`;
-  spawnBot(ip, port, version, botName, req.session.user);
+  spawnBot(ip, port, version, 'PozBot_Original', req.session.user);
   res.redirect('/panel');
 });
 
