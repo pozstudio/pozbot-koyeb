@@ -1,0 +1,15 @@
+{
+  "name": "pozbot-koyeb",
+  "version": "1.0.0",
+  "description": "Site tabanlı Aternos bot sistemi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mineflayer": "^4.5.0",
+    "dotenv": "^16.3.1"
+  }
+}
