@@ -60,12 +60,7 @@ app.post('/connect', (req, res) => {
   req.session.botID = botID;
   const botName = `PozBot_${botID}`;
   spawnBot(ip, port, version, botName, req.session.user);
-  res.redirect('/loading');
-});
-
-app.get('/loading', (req, res) => {
-  if (!req.session.user || !req.session.botID) return res.redirect('/login');
-  res.render('loading');
+  res.redirect('/panel');
 });
 
 app.post('/disconnect', (req, res) => {
