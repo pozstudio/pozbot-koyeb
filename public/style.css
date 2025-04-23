@@ -1,8 +1,7 @@
 body {
-  background: #101010;
-  color: #fff;
+  background: #111;
+  color: white;
   font-family: sans-serif;
-  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,40 +9,37 @@ body {
 }
 
 .container, .login-box {
-  background: #1f1f1f;
+  background: #1e1e1e;
   padding: 30px;
   border-radius: 12px;
   width: 90%;
   max-width: 400px;
   text-align: center;
-  box-shadow: 0 0 10px #000;
 }
 
 input, select {
   width: 100%;
   padding: 10px;
-  margin: 8px 0;
+  margin: 10px 0;
   border-radius: 6px;
-  border: none;
   background: #333;
   color: white;
+  border: none;
 }
 
 .btn {
-  background: crimson;
+  background-color: crimson;
   color: white;
   border: none;
   padding: 10px 20px;
-  margin-top: 10px;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
 .error-box {
-  background: #ff4444;
+  background-color: #ff4444;
   color: white;
   padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 6px;
-  font-weight: bold;
+  margin-bottom: 15px;
+  border-radius: 5px;
 }
