@@ -8,24 +8,28 @@
 </head>
 <body>
   <div class="container">
-    <h2><%= username %> Paneli</h2>
-    
+    <div class="top-bar">
+      <h2>PozBot Panel</h2>
+      <span class="status-indicator <%= botRunning ? 'online' : 'offline' %>"></span>
+    </div>
+
     <% if (botID) { %>
       <p class="info">Bot Adı: <b>PozBot_Original</b></p>
       <p class="info"><%= botID %> / 5000 bottan <%= botID %>. bot seçildi</p>
     <% } %>
 
     <% if (error) { %>
-      <div class="error-box"><%= error %></div>
+      <script>window.onload = () => showToast("<%= error %>")</script>
     <% } %>
 
     <% if (blocked) { %>
       <div class="error-box">Şu anda başka bir kullanıcı botu çalıştırıyor.</div>
     <% } else if (!botRunning) { %>
       <form action="/connect" method="POST" class="form">
-        <input type="text" name="ip" placeholder="Sunucu IP" required>
-        <input type="text" name="port" placeholder="Port" required>
+        <input type="text" name="ip" placeholder="📡 Sunucu IP" required>
+        <input type="text" name="port" placeholder="🔌 Port" required>
         <select name="version" required>
+          <option value="">⚙️ Sürüm Seç</option>
           <% ['1.8.9', '1.12.2', '1.16.5', '1.18.2', '1.20.1', '1.21.5'].forEach(v => { %>
             <option value="<%= v %>"><%= v %></option>
           <% }) %>
@@ -37,6 +41,23 @@
         <button class="btn danger">Botu Durdur</button>
       </form>
     <% } %>
+
+    <div class="about">
+      <h3>Hakkında</h3>
+      <p>PozBot v1.0 – Aternos sunucuları için görünmez otomatik bot</p>
+      <p>Yapımcı: <b>Ahmet Poyraz Aydın</b> | 2025</p>
+    </div>
   </div>
+
+  <!-- TOAST BİLDİRİM -->
+  <div id="toast" class="toast hidden"></div>
+  <script>
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 3000);
+    }
+  </script>
 </body>
 </html>
