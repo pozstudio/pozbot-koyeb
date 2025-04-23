@@ -10,5 +10,6 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "mineflayer": "^4.5.0"
+    "minecraft-server-util": "^5.5.0"
   }
 }
