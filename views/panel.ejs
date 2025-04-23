@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title><%= username %> Paneli</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2><%= username %> için Bot Paneli</h2>
+    <p>Bot Adı: <b><%= botName %></b></p>
+    <% if (error) { %>
+      <div class="error-box"><%= error %></div>
+    <% } %>
+
+    <% if (botRunning) { %>
+      <form action="/disconnect" method="POST">
+        <button class="btn">Botu Durdur</button>
+      </form>
+    <% } else { %>
+      <form action="/connect" method="POST">
+        <input type="text" name="ip" placeholder="Sunucu IP" required>
+        <input type="text" name="port" placeholder="Port" required>
+        <select name="version" required>
+          <% ['1.8.9', '1.12.2', '1.16.5', '1.18.2', '1.20.1', '1.21.5'].forEach(v => { %>
+            <option value="<%= v %>"><%= v %></option>
+          <% }) %>
+        </select>
+        <button class="btn">Botu Başlat</button>
+      </form>
+    <% } %>
+  </div>
+</body>
+</html>
