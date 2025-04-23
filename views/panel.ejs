@@ -7,8 +7,11 @@
 </head>
 <body>
   <div class="container">
-    <h2><%= username %> için Bot Paneli</h2>
-    <p>Bot Adı: <b><%= botName %></b></p>
+    <h2><%= username %> Paneli</h2>
+    <% if (botID) { %>
+      <p>Bot Adı: <b>PozBot_<%= botID %></b></p>
+      <p><%= botID %> / 5000 bottan <%= botID %>. bot aktif!</p>
+    <% } %>
 
     <% if (error) { %>
       <div class="error-box"><%= error %></div>
