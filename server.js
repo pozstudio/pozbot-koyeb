@@ -18,8 +18,8 @@ app.use(session({
 }));
 
 const USERS = {
-  admin1: { password: 'admin1', botName: 'PozBot_1' },
-  admin2: { password: 'admin2', botName: 'PozBot_2' }
+  admin1: { password: 'admin1' },
+  admin2: { password: 'admin2' }
 };
 
 app.get('/', (req, res) => res.redirect('/login'));
@@ -46,7 +46,7 @@ app.get('/panel', (req, res) => {
 
   res.render('panel', {
     username: req.session.user,
-    botName: USERS[req.session.user].botName,
+    botID: req.session.botID,
     botRunning: botRunning && myTurn,
     blocked: botRunning && !myTurn,
     error
@@ -56,9 +56,16 @@ app.get('/panel', (req, res) => {
 app.post('/connect', (req, res) => {
   if (!req.session.user) return res.redirect('/login');
   const { ip, port, version } = req.body;
-  const botName = USERS[req.session.user].botName;
+  const botID = Math.floor(Math.random() * 5000) + 1;
+  req.session.botID = botID;
+  const botName = `PozBot_${botID}`;
   spawnBot(ip, port, version, botName, req.session.user);
-  setTimeout(() => res.redirect('/panel'), 1000);
+  res.redirect('/loading');
+});
+
+app.get('/loading', (req, res) => {
+  if (!req.session.user || !req.session.botID) return res.redirect('/login');
+  res.render('loading');
 });
 
 app.post('/disconnect', (req, res) => {
