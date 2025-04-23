@@ -27,21 +27,37 @@ body {
   margin: 0;
 }
 
-.container, .login-box {
+.container {
   background: var(--surface);
   padding: 32px;
   border-radius: var(--radius);
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   box-shadow: var(--shadow);
-  text-align: center;
   border: 1px solid var(--border);
 }
 
-h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: var(--accent);
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #555;
+  box-shadow: 0 0 4px #000;
+}
+
+.status-indicator.online {
+  background: #2ecc71;
+}
+
+.status-indicator.offline {
+  background: #888;
 }
 
 input, select {
@@ -64,11 +80,11 @@ input:focus, select:focus {
 .btn {
   width: 100%;
   padding: 12px;
-  margin-top: 14px;
   background: var(--accent);
   color: white;
   border: none;
   border-radius: var(--radius);
+  margin-top: 14px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
@@ -80,11 +96,18 @@ input:focus, select:focus {
 }
 
 .btn.danger {
-  background: var(--error);
+  background-color: var(--error);
 }
 
 .btn.danger:hover {
   background: #cc4444;
+}
+
+.info {
+  font-size: 14px;
+  margin: 6px 0;
+  color: #c9d1d9;
+  text-align: center;
 }
 
 .error-box {
@@ -93,16 +116,45 @@ input:focus, select:focus {
   border-radius: var(--radius);
   margin-bottom: 15px;
   font-weight: bold;
+  text-align: center;
 }
 
-.info {
-  font-size: 14px;
-  margin: 6px 0;
-  color: #c9d1d9;
+.about {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 13px;
+  color: #aaa;
+}
+
+.about h3 {
+  color: var(--accent);
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--error);
+  color: white;
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-weight: bold;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+}
+
+.toast.hidden {
+  display: none;
 }
 
 @media (max-width: 480px) {
-  .container, .login-box {
+  .container {
     padding: 24px;
   }
 
@@ -115,4 +167,4 @@ input:focus, select:focus {
     font-size: 15px;
     padding: 10px;
   }
-}
+  }
