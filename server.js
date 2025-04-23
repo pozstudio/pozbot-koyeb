@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const { spawnBot, stopBot, isBotRunning, getLastError } = require('./bot');
+const { spawnBot, stopBot, isBotRunning, getLastError, getCurrentOwner } = require('./bot');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,10 +22,7 @@ const USERS = {
   admin2: { password: 'admin2', botName: 'PozBot_2' }
 };
 
-// Giriş Sayfası
-app.get('/', (req, res) => {
-  res.redirect('/login');
-});
+app.get('/', (req, res) => res.redirect('/login'));
 
 app.get('/login', (req, res) => {
   res.render('login', { error: null });
@@ -37,18 +34,21 @@ app.post('/login', (req, res) => {
     req.session.user = username;
     res.redirect('/panel');
   } else {
-    res.render('login', { error: "Kullanıcı adı veya şifre yanlış!" });
+    res.render('login', { error: 'Kullanıcı adı veya şifre yanlış!' });
   }
 });
 
 app.get('/panel', (req, res) => {
   if (!req.session.user) return res.redirect('/login');
+  const error = getLastError();
+  const botRunning = isBotRunning();
+  const myTurn = getCurrentOwner() === req.session.user;
 
-  const error = getLastError(req.session.user);
   res.render('panel', {
     username: req.session.user,
     botName: USERS[req.session.user].botName,
-    botRunning: isBotRunning(req.session.user),
+    botRunning: botRunning && myTurn,
+    blocked: botRunning && !myTurn,
     error
   });
 });
@@ -68,5 +68,5 @@ app.post('/disconnect', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`http://localhost:${port} üzerinde çalışıyor`);
+  console.log(`PozBot çalışıyor: http://localhost:${port}`);
 });
