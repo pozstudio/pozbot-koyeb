@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>PozBot Giriş</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="login-box">
+    <h2>Giriş Yap</h2>
+    <% if (error) { %>
+      <div class="error-box"><%= error %></div>
+    <% } %>
+    <form method="POST" action="/login">
+      <input type="text" name="username" placeholder="Kullanıcı adı" required>
+      <input type="password" name="password" placeholder="Şifre" required>
+      <button type="submit" class="btn">Giriş Yap</button>
+    </form>
+  </div>
+</body>
+</html>
