@@ -3,14 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>PozBot Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div class="container">
     <h2><%= username %> Paneli</h2>
+    
     <% if (botID) { %>
-      <p>Bot Adı: <b>PozBot_<%= botID %></b></p>
-      <p><%= botID %> / 5000 bottan <%= botID %>. bot aktif!</p>
+      <p class="info">Bot Adı: <b>PozBot_Original</b></p>
+      <p class="info"><%= botID %> / 5000 bottan <%= botID %>. bot seçildi</p>
     <% } %>
 
     <% if (error) { %>
@@ -20,7 +22,7 @@
     <% if (blocked) { %>
       <div class="error-box">Şu anda başka bir kullanıcı botu çalıştırıyor.</div>
     <% } else if (!botRunning) { %>
-      <form action="/connect" method="POST">
+      <form action="/connect" method="POST" class="form">
         <input type="text" name="ip" placeholder="Sunucu IP" required>
         <input type="text" name="port" placeholder="Port" required>
         <select name="version" required>
@@ -32,7 +34,7 @@
       </form>
     <% } else { %>
       <form action="/disconnect" method="POST">
-        <button class="btn">Botu Durdur</button>
+        <button class="btn danger">Botu Durdur</button>
       </form>
     <% } %>
   </div>
