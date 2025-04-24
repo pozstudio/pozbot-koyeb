@@ -5,11 +5,12 @@
   --accent-hover: #1f6feb;
   --error: #ff5555;
   --success: #2ecc71;
+  --info: #3498db;
   --text: #e6edf3;
   --muted-text: #8b949e;
   --border: #30363d;
   --radius: 14px;
-  --shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
   --font: 'Segoe UI', 'Inter', sans-serif;
 }
 
@@ -37,11 +38,12 @@ body {
   max-width: 440px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .container:hover {
   transform: scale(1.01);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
 }
 
 .top-bar {
@@ -49,11 +51,13 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .status-indicator {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: #555;
   box-shadow: 0 0 6px #000;
@@ -81,7 +85,7 @@ input, select {
   transition: 0.25s ease;
 }
 
-input::placeholder, select {
+input::placeholder {
   color: var(--muted-text);
 }
 
@@ -101,12 +105,14 @@ input:focus, select:focus {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s ease;
+  transition: background 0.3s, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .btn:hover {
   background: var(--accent-hover);
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 .btn:active {
@@ -119,6 +125,14 @@ input:focus, select:focus {
 
 .btn.danger:hover {
   background: #cc4444;
+}
+
+.btn.success {
+  background-color: var(--success);
+}
+
+.btn.success:hover {
+  background-color: #27ae60;
 }
 
 .info {
@@ -135,6 +149,7 @@ input:focus, select:focus {
   margin-bottom: 16px;
   font-weight: bold;
   text-align: center;
+  color: white;
 }
 
 .about {
@@ -157,7 +172,7 @@ input:focus, select:focus {
   position: fixed;
   top: 20px;
   right: 20px;
-  background: var(--error);
+  background: var(--info);
   color: white;
   padding: 14px 20px;
   border-radius: var(--radius);
@@ -165,6 +180,14 @@ input:focus, select:focus {
   font-weight: bold;
   z-index: 9999;
   transition: opacity 0.3s ease;
+}
+
+.toast.success {
+  background: var(--success);
+}
+
+.toast.error {
+  background: var(--error);
 }
 
 .toast.hidden {
@@ -185,4 +208,4 @@ input:focus, select:focus {
     flex-direction: column;
     gap: 8px;
   }
-  }
+}
