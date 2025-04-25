@@ -1,22 +1,177 @@
-<!DOCTYPE html><html lang="tr">
+<!DOCTYPE html>
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
   <title>Giriş Yap</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/style.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #0d1117, #161b22);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-box {
+      background: var(--surface);
+      padding: 32px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 26px;
+      animation: slideIn 0.4s ease;
+    }
+
+    .login-box input {
+      margin: 10px 0;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 16px;
+      top: 12px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--muted-text);
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .error-box {
+      background: var(--error);
+      padding: 10px;
+      border-radius: var(--radius);
+      color: white;
+      font-weight: bold;
+      animation: popFade 0.4s ease;
+      margin-bottom: 16px;
+    }
+
+    .login-box .user-list b:hover {
+      color: var(--accent);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes popFade {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      0% { transform: translateY(-20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .forgot-link {
+      display: block;
+      font-size: 13px;
+      color: var(--muted-text);
+      margin-top: 10px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .forgot-link:hover {
+      color: var(--accent);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--success);
+      color: white;
+      padding: 12px 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      font-weight: bold;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .toast.visible {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
   <div class="login-box">
     <h2>PozBot Giriş</h2>
-    <% if (error) { %>
+
+    <% if (typeof error !== 'undefined' && error) { %>
       <div class="error-box"><%= error %></div>
     <% } %>
-    <form method="POST" action="/login">
+
+    <form method="POST" action="/login" autocomplete="off">
       <input type="text" name="username" placeholder="Kullanıcı adı" required>
-      <input type="password" name="password" placeholder="Şifre" required>
-      <button type="submit" class="btn">Giriş Yap</button>
+
+      <div class="input-wrapper">
+        <input type="password" id="password" name="password" placeholder="Şifre" required>
+        <span class="toggle-password" onclick="togglePassword()">Göster</span>
+      </div>
+
+      <button type="submit" class="btn"><span>🔐</span> Giriş Yap</button>
     </form>
-    <p style="font-size: 13px; color: gray; margin-top: 12px;">Kullanıcılar: <b>admin1</b> / <b>admin2</b></p>
+
+    <a class="forgot-link">Şifremi Unuttum?</a>
+
+    <p class="user-list" style="font-size: 13px; color: gray; margin-top: 12px;">
+      Kullanıcılar: <b>admin1</b> / <b>admin2</b>
+    </p>
   </div>
+
+  <div id="toast" class="toast">Giriş başarılı</div>
+
+  <script>
+    function togglePassword() {
+      const pwd = document.getElementById('password');
+      const toggle = document.querySelector('.toggle-password');
+      if (pwd.type === 'password') {
+        pwd.type = 'text';
+        toggle.textContent = 'Gizle';
+      } else {
+        pwd.type = 'password';
+        toggle.textContent = 'Göster';
+      }
+    }
+
+    // Eğer sunucudan başarı ile login olduysa, göster
+    <% if (typeof success !== 'undefined' && success) { %>
+      window.onload = () => {
+        const toast = document.getElementById('toast');
+        toast.textContent = "<%= success %>";
+        toast.classList.add('visible');
+        setTimeout(() => toast.classList.remove('visible'), 3000);
+      }
+    <% } %>
+  </script>
 </body>
 </html>
