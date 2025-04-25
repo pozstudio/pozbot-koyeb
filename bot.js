@@ -23,7 +23,12 @@ function spawnBot(ip, port, version, username, owner) {
     });
 
     bot.once('spawn', () => {
-      bot.chat('Bot Sunucuya Bağlandı');
+      // İstediğin yazılar Minecraft sohbetinde
+      bot.chat('§c§lPozBot'); // Kalın kırmızı
+      bot.chat('§6PozBot Sunucuya Bağlandı'); // Altın sarısı
+      bot.chat('§e9 Saat Açık'); // Sarı
+
+      // Görünmezlik efekti
       bot.chat('/effect give @s invisibility 99999 1 true');
 
       let rotate = 0;
@@ -84,4 +89,10 @@ function getCurrentOwner() {
   return currentOwner;
 }
 
-module.exports = { spawnBot, stopBot, isBotRunning, getLastError, getCurrentOwner };
+module.exports = {
+  spawnBot,
+  stopBot,
+  isBotRunning,
+  getLastError,
+  getCurrentOwner
+};
