@@ -9,58 +9,53 @@
 <body>
   <div class="container">
     <div class="top-bar">
-      <h2>PozBot Panel</h2>
+      <h2 style="background: linear-gradient(90deg, #58a6ff, #1f6feb); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PozBot Panel</h2>
       <span class="status-indicator <%= botRunning ? 'online' : 'offline' %>"></span>
     </div>
 
     <% if (botID) { %>
-      <p class="info">Bot Adı: <b>PozBot_Original</b></p>
-      <p class="info"><%= botID %> / 5000 bottan <%= botID %>. bot seçildi</p>
+      <div class="card">
+        <p class="info">Bot Adı: <b>PozBot_Original</b></p>
+        <p class="info"><%= botID %> / 5000 bottan <%= botID %>. bot seçildi</p>
+      </div>
     <% } %>
 
     <% if (error) { %>
-      <script>window.onload = () => showToast("<%= error %>")</script>
+      <script>window.onload = () => showToast("<%= error %>", "error")</script>
     <% } %>
 
     <% if (blocked) { %>
       <div class="error-box">Şu anda başka bir kullanıcı botu çalıştırıyor.</div>
     <% } else if (!botRunning) { %>
-      <form action="/connect" method="POST" class="form">
+      <form action="/connect" method="POST" class="form" autocomplete="off">
         <input type="text" name="ip" placeholder="📡 Sunucu IP" required>
         <input type="text" name="port" placeholder="🔌 Port" required>
         <select name="version" required>
           <option value="">⚙️ Sürüm Seç</option>
-          <% [
-            '1.7.2','1.7.10',
-            '1.8','1.8.1','1.8.3','1.8.4','1.8.7','1.8.8','1.8.9',
-            '1.9','1.9.2','1.9.4',
-            '1.10','1.10.2',
-            '1.11','1.11.2',
-            '1.12','1.12.1','1.12.2',
-            '1.13','1.13.1','1.13.2',
-            '1.14','1.14.1','1.14.2','1.14.3','1.14.4',
-            '1.15','1.15.1','1.15.2',
-            '1.16','1.16.1','1.16.2','1.16.3','1.16.4','1.16.5',
-            '1.17','1.17.1',
-            '1.18','1.18.1','1.18.2',
-            '1.19','1.19.1','1.19.2','1.19.3','1.19.4',
-            '1.20','1.20.1','1.20.2','1.20.3','1.20.4',
-            '1.21','1.21.1','1.21.2','1.21.3','1.21.4','1.21.5'
-          ].forEach(v => { %>
-            <option value="<%= v %>"><%= v %></option>
+          <optgroup label="--- 1.8.x ---"></optgroup>
+          <% ['1.8','1.8.8','1.8.9'].forEach(v => { %>
+            <option value="<%= v %>" class="supported"><%= v %></option>
+          <% }) %>
+          <optgroup label="--- 1.20.x ---"></optgroup>
+          <% ['1.20','1.20.1','1.20.2','1.20.3','1.20.4'].forEach(v => { %>
+            <option value="<%= v %>" class="supported"><%= v %></option>
+          <% }) %>
+          <optgroup label="--- 1.21.x ---"></optgroup>
+          <% ['1.21','1.21.1','1.21.2','1.21.3','1.21.4','1.21.5'].forEach(v => { %>
+            <option value="<%= v %>" class="unsupported"><%= v %></option>
           <% }) %>
         </select>
-        <button class="btn">Botu Başlat</button>
+        <button class="btn"><span style="margin-right: 6px;">🚀</span>Botu Başlat</button>
       </form>
     <% } else { %>
       <form action="/disconnect" method="POST">
-        <button class="btn danger">Botu Durdur</button>
+        <button class="btn danger"><span style="margin-right: 6px;">⛔</span>Botu Durdur</button>
       </form>
     <% } %>
 
     <div class="about">
       <h3>Hakkında</h3>
-      <p>PozBot v1.0 – Aternos sunucuları için görünmez otomatik bot</p>
+      <p><b>PozBot v1.0</b> – Aternos sunucularını 7/24 açık tutmak için geliştirildi.</p>
       <p>Yapımcı: <b>Ahmet Poyraz Aydın</b> | 2025</p>
     </div>
   </div>
@@ -68,12 +63,19 @@
   <!-- TOAST BİLDİRİM -->
   <div id="toast" class="toast hidden"></div>
   <script>
-    function showToast(message) {
+    function showToast(message, type = "info") {
       const toast = document.getElementById('toast');
       toast.textContent = message;
-      toast.classList.remove('hidden');
+      toast.className = `toast ${type}`;
       setTimeout(() => toast.classList.add('hidden'), 3000);
     }
+
+    // Desteklenmeyen sürümleri kırmızıya boyama
+    window.onload = () => {
+      document.querySelectorAll("option.unsupported").forEach(opt => {
+        opt.style.color = "#ff5555";
+      });
+    };
   </script>
 </body>
 </html>
