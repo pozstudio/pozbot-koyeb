@@ -6,16 +6,19 @@
   --error: #ff5555;
   --success: #2ecc71;
   --info: #3498db;
+  --warning: #f39c12;
   --text: #e6edf3;
   --muted-text: #8b949e;
   --border: #30363d;
   --radius: 14px;
   --shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
   --font: 'Segoe UI', 'Inter', sans-serif;
+  --card-gradient: linear-gradient(145deg, #1a1f27, #0f141a);
 }
 
 * {
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -31,19 +34,33 @@ body {
 }
 
 .container {
-  background: var(--surface);
+  background: var(--card-gradient);
   padding: 36px;
   border-radius: var(--radius);
   width: 100%;
-  max-width: 440px;
+  max-width: 460px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .container:hover {
   transform: scale(1.01);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6);
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 120px;
+  height: 120px;
+  background: var(--accent);
+  opacity: 0.05;
+  border-radius: 50%;
 }
 
 .top-bar {
@@ -66,10 +83,12 @@ body {
 
 .status-indicator.online {
   background: var(--success);
+  box-shadow: 0 0 12px var(--success);
 }
 
 .status-indicator.offline {
   background: #888;
+  box-shadow: 0 0 6px #444;
 }
 
 input, select {
@@ -135,6 +154,16 @@ input:focus, select:focus {
   background-color: #27ae60;
 }
 
+.btn.warning {
+  background-color: var(--warning);
+  color: #000;
+}
+
+.btn.warning:hover {
+  background-color: #e67e22;
+  color: #fff;
+}
+
 .info {
   font-size: 14px;
   margin: 8px 0;
@@ -179,7 +208,8 @@ input:focus, select:focus {
   box-shadow: var(--shadow);
   font-weight: bold;
   z-index: 9999;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  animation: slideIn 0.4s ease forwards;
 }
 
 .toast.success {
@@ -190,10 +220,68 @@ input:focus, select:focus {
   background: var(--error);
 }
 
+.toast.warning {
+  background: var(--warning);
+  color: #000;
+}
+
 .toast.hidden {
   display: none;
 }
 
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.tooltip {
+  position: absolute;
+  background: var(--surface);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  box-shadow: var(--shadow);
+  z-index: 10000;
+  display: none;
+  transition: opacity 0.3s;
+}
+
+.has-tooltip:hover .tooltip {
+  display: block;
+  opacity: 1;
+}
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-top: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Avatar badge */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+}
+
+/* Responsive tweaks */
 @media (max-width: 480px) {
   .container {
     padding: 24px;
@@ -208,4 +296,13 @@ input:focus, select:focus {
     flex-direction: column;
     gap: 8px;
   }
-}
+
+  .toast {
+    right: 10px;
+    left: 10px;
+    top: auto;
+    bottom: 20px;
+    width: auto;
+    font-size: 14px;
+  }
+  }
